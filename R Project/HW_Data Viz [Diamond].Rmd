@@ -1,0 +1,76 @@
+---
+title: "HW_Report"
+author: "junlakiat"
+date: "2023-03-03"
+output:
+  pdf_document: default
+  html_document: default
+---
+
+## Homework
+
+Explore dataframe `diamonds` and create 5 visualizations.
+
+```{r message=FALSE, warning=FALSE}
+library(tidyverse)
+library(patchwork)
+set.seed(36)
+diamonds_sam <- diamonds %>% sample_frac(0.2)
+head(diamonds)
+```
+
+### Chart 1 - relationship between carat and price.
+
+```{r message=FALSE, warning=FALSE}
+c1 <- ggplot(diamonds_sam, aes(carat, price)) +
+  geom_point() +
+  geom_smooth() +
+  theme_minimal()
+c1
+```
+We found a positive relationship between two variables.
+
+## Chart 2 - Bar chart of diamond cuts.
+```{r message=FALSE, warning=FALSE}
+c2 <- ggplot(diamonds_sam, aes(cut, fill = color)) +
+  geom_bar(position="fill") +
+  theme_minimal()
+c2
+```
+
+## Chart 3 - Histogram of diamond prices.
+```{r message=FALSE, warning=FALSE}
+c3 <- ggplot(diamonds_sam, aes(price)) +
+  geom_histogram(fill = "#0066CC", color = "black")+
+  theme_minimal()
+c3
+```
+This diamond’s Price has skew distribution on to the right. Most of the diamonds cost about $300 to $6,000.
+
+## Chart 4 -Scatter plot of diamond prices by carat and clarity.
+```{r message=FALSE, warning=FALSE}
+c4 <- ggplot(diamonds_sam, aes(carat, price)) +
+  geom_point(aes(color = clarity))+
+  geom_smooth()+
+  theme_minimal()
+c4
+```
+Low carat has high clarity IF more than High carat.
+Price of low carat has high clarity not most high carat has low clarity. 
+
+## Chart 5 - Faceted scatter plot of diamond prices by carat and cut.
+```{r message=FALSE, warning=FALSE}
+c5 <- ggplot(diamonds_sam, aes(carat, price, color = color)) +
+  geom_point() +
+  facet_wrap(~cut)+
+  theme_minimal()
+c5
+```
+
+```{r message=FALSE, warning=FALSE}
+c1/c2/c3
+```
+```{r message=FALSE, warning=FALSE}
+c4/c5
+```
+
